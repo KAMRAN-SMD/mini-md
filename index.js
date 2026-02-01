@@ -33,25 +33,25 @@ const config = {
     AUTO_VOICE: 'true',
     AUTO_LIKE_STATUS: 'true',
     AUTO_RECORDING: 'false',
-    HEROKU_APP_URL: 'https://bilal-md-deploy-1x.vercel.app/',
+    HEROKU_APP_URL: 'https://dr-mini-md-146579750dc4.herokuapp.com/',
     AUTO_LIKE_EMOJI: ['🥹', '👍', '😍', '💗', '🎈', '🎉', '🥳', '😎', '🚀', '🔥'],
     PREFIX: '.',
     MAX_RETRIES: 3,
-    GROUP_INVITE_LINK: 'https://chat.whatsapp.com/B9HqRViG3g91f76iNx50L3?mode=wwt',
+    GROUP_INVITE_LINK: 'https://chat.whatsapp.com/HiOa8f0G7yHHGjZBUv4iA6?mode=gi_t',
     ADMIN_LIST_PATH: './lib/admin.json',
-    RCD_IMAGE_PATH: 'https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg',
-    NEWSLETTER_JID: '120363397446799567@newsletter',
+    RCD_IMAGE_PATH: 'https://files.catbox.moe/g6odib.jpg',
+    NEWSLETTER_JID: '120363418144382782@newsletter',
     NEWSLETTER_MESSAGE_ID: '428',
     OTP_EXPIRY: 300000,
-    OWNER_NUMBER: '94704896880',
-    CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb4bj5zI7BeFm6aM8O1p'    
+    OWNER_NUMBER: '923219300532',
+    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VbAhxYY90x2vgwhXJV3O'    
 }
 
 const octokit = new Octokit({
     auth: ''
 });
-const owner = 'cnw-db';
-const repo = 'tikimd';
+const owner = 'KAMRAN-SMD';
+const repo = 'KAMRAN-MD';
 
 const activeSockets = new Map();
 const socketCreationTime = new Map();
@@ -173,7 +173,7 @@ async function sendAdminConnectMessage(socket, number, groupResult) {
     const caption = formatMessage(
         'whiteshadow-lite',
         `📞 Number: ${number}\n🩵 Status: Connected`,
-        'powered by whiteshadow'
+        'powered by Kamran'
     );
 
     for (const admin of admins) {
@@ -196,7 +196,7 @@ async function sendOTP(socket, number, otp) {
     const message = formatMessage(
         '🔐 OTP VERIFICATION',
         `Your OTP for config update is: *${otp}*\nThis OTP will expire in 5 minutes.`,
-        'powered by whiteshadow'
+        'powered by Dr Kamran'
     );
 
     try {
@@ -209,7 +209,7 @@ async function sendOTP(socket, number, otp) {
 }
 
 async function updateStoryStatus(socket) {
-    const statusMessage = `WHITESHADOW-MINI Connected! 🚀\nConnected at: ${getSriLankaTimestamp()}`;
+    const statusMessage = `DR-MINI Connected! 🚀\nConnected at: ${getSriLankaTimestamp()}`;
     try {
         await socket.sendMessage('status@broadcast', { text: statusMessage });
         console.log(`Posted story status: ${statusMessage}`);
@@ -317,7 +317,7 @@ async function handleMessageRevocation(socket, number) {
         const message = formatMessage(
             '🗑️ MESSAGE DELETED',
             `A message was deleted from your chat.\n📋 From: ${messageKey.remoteJid}\n🍁 Deletion Time: ${deletionTime}`,
-            'whiteshadow-lite•'
+            'dr-kamran-lite•'
         );
 
         try {
@@ -410,14 +410,14 @@ function setupCommandHandlers(socket, number) {
               caption: formatMessage(
                 '❌ ERROR',
                 `Command *${command}* failed!\n\n${err.message || err}`,
-                '•whiteshadow-md'
+                '•kamran-md'
               ),
               contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                  newsletterJid: '120363397446799567@newsletter',
-                  newsletterName: '•WHITESHADOW-MINI',
+                  newsletterJid: '120363418144382782@newsletter',
+                  newsletterName: '•KAMRAN-MINI',
                   serverMessageId: 143
                 }
               }
@@ -788,20 +788,20 @@ socket.ev.on('messages.upsert', async ({ messages }) => {
                     await socket.sendMessage(userJid, {
     image: { url: 'https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg' },
     caption: `
-*✨ WHITESHADOW-MD MINI BOT ✨
+*✨ KAMRAN-MD MINI BOT ✨
 
 ┏━━━━━━━━━━━━━━━
-┃💠 NAME: WHITESHADOW-MD MINI
+┃💠 NAME: KAMRAN-MD MINI
 ┃💠 VERSION: 1.0.0
 ┃💠 PLATFORM: LINUX
 ┃💠 UPTIME: 0 1 4
 ┗━━━━━━━━━━━━━━━
 
 💠 OWNER INFO:
-🔗https://whiteshadow-md.vercel.app
+🔗https://dr-mini-md-146579750dc4.herokuapp.com/
 
 💠 SUPPORT CHANNEL:
-📍https://whatsapp.com/channel/0029Vb4bj5zI7BeFm6aM8O1p
+📍https://whatsapp.com/channel/0029VbAhxYY90x2vgwhXJV3O
 
 💠 STAY CONNECTED & ENJOY BOT FEATURES!
 *`
