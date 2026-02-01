@@ -31,7 +31,7 @@ module.exports = {
 
       let caption = `🔞 *XNXX Results for:* ${input}\n\n`;
       videos.forEach((v, i) => caption += `*${i + 1}.* ${v.title}\n`);
-      caption += `\n📥 *Reply with the number to select a video (1-${videos.length}).*\n\n> MADE IN BY BILAL MD`;
+      caption += `\n📥 *Reply with the number to select a video (1-${videos.length}).*\n\n> MADE IN BY KAMRAN MD`;
 
       const sentMsg = await socket.sendMessage(from, { text: caption }, { quoted: msg });
       const msgId = sentMsg.key.id;
@@ -67,7 +67,7 @@ module.exports = {
               `🔢 *Choose download quality:*\n` +
               `1️⃣ High Quality (Large)\n` +
               `2️⃣ Low Quality (Small)\n\n` +
-              `📥 *Reply with 1 or 2 to continue.*\n\n> MINI BILAL MD`,
+              `📥 *Reply with 1 or 2 to continue.*\n\n> MINI KAMRAN MD`,
           }, { quoted: m });
 
           const confirmMsgId = confirmMsg.key.id;
