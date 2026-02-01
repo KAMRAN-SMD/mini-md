@@ -1,433 +1,574 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>☭ 𝙻𝙾𝙵𝚃-𝚀𝚄𝙰𝙽𝚃𝚄𝙼-𝚅𝙸𝙸 ☭</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAMRAN-MINI-BOT - WhatsApp Pairing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #131828;
+            --bg-card: #1a202c;
+            --accent-cyan: #00d9ff;
+            --accent-purple: #a78bfa;
+            --accent-pink: #ec4899;
+            --text-primary: #f0f4f8;
+            --text-secondary: #cbd5e0;
+            --text-muted: #8892a0;
+            --border-color: rgba(0, 217, 255, 0.1);
+            --success: #10b981;
+            --error: #ef4444;
+            --gradient: linear-gradient(135deg, #00d9ff 0%, #a78bfa 50%, #ec4899 100%);
+        }
 
-  <!-- 🌸 Tailwind + Icons -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    /* 🌸 UNICORN QUANTUM ANIMATIONS */
-    @keyframes unicornGallop {
-      0%, 100% { transform: translateX(0) rotate(0deg); }
-      25% { transform: translateX(10px) rotate(5deg); }
-      50% { transform: translateX(20px) rotate(10deg); }
-      75% { transform: translateX(10px) rotate(5deg); }
-    }
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    @keyframes unicornTwinkle {
-      0% { opacity: 0.1; transform: scale(0.5) rotate(0deg); }
-      25% { opacity: 0.8; transform: scale(1.2) rotate(90deg); }
-      50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
-      75% { opacity: 0.8; transform: scale(1.2) rotate(270deg); }
-      100% { opacity: 0.1; transform: scale(0.5) rotate(360deg); }
-    }
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    @keyframes unicornHornSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        .glow-bg {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    @keyframes unicornMagicWave {
-      0% { box-shadow: 0 0 10px #ffd700; }
-      50% { box-shadow: 0 0 30px #ff69b4, 0 0 50px #ffd700; }
-      100% { box-shadow: 0 0 10px #ffd700; }
-    }
+        .glow-1 { background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%); top: -300px; right: -300px; }
+        .glow-2 { background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%); bottom: -300px; left: -300px; }
 
-    @keyframes unicornPulse {
-      0%, 100% { filter: brightness(1) hue-rotate(0deg); }
-      50% { filter: brightness(1.5) hue-rotate(120deg); }
-    }
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.6s ease;
+        }
 
-    /* 🌸 UNICORN BACKGROUND */
-    body {
-      font-family: 'Orbitron', monospace;
-      overflow: hidden;
-      background: radial-gradient(ellipse at center, #1a0b2e 0%, #16213e 50%, #0f0f23 100%);
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    /* 🌸 UNICORN VIDEO BACKGROUND - REMOVED RAIN */
-    video#bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      filter: brightness(0.3) contrast(1.2) saturate(1.8);
-    }
+        .card {
+            background: rgba(26, 32, 44, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* 🌸 UNICORN STARS */
-    .unicorn-star {
-      position: absolute;
-      background: radial-gradient(circle, #ffd700 0%, #ff69b4 50%, transparent 70%);
-      border-radius: 50%;
-      animation: unicornTwinkle 3s infinite;
-      filter: drop-shadow(0 0 8px #ffd700);
-      pointer-events: none;
-    }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0.7;
+        }
 
-    /* 🌸 UNICORN SPARKLES */
-    .unicorn-sparkle {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: #ff69b4;
-      border-radius: 50%;
-      animation: unicornHornSpin 1.5s linear infinite;
-      box-shadow: 0 0 8px #ff69b4;
-    }
+        .logo-box {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+            animation: scaleIn 0.6s ease;
+        }
 
-    /* 🌸 UNICORN NEON EFFECTS */
-    .unicorn-gradient {
-      background: linear-gradient(90deg, #ffd700, #ff69b4, #98fb98, #dda0dd);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: unicornPulse 4s ease-in-out infinite;
-    }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-    .unicorn-neon {
-      text-shadow: 
-        0 0 5px #ffd700,
-        0 0 15px #ff69b4,
-        0 0 25px #ffd700,
-        0 0 40px #ff69b4;
-      animation: unicornMagicWave 2s ease-in-out infinite;
-    }
+        h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .unicorn-border {
-      box-shadow: 
-        0 0 15px #ffd700,
-        0 0 30px #ff69b4,
-        inset 0 0 15px rgba(255,215,0,0.2);
-      animation: unicornMagicWave 3s ease-in-out infinite;
-    }
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
 
-    .unicorn-button {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 
-        0 0 15px #ff69b4,
-        0 0 25px #ffd700,
-        0 0 40px #ff69b4;
-      position: relative;
-      overflow: hidden;
-    }
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
 
-    .unicorn-button::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
 
-    .unicorn-button:hover::before {
-      left: 100%;
-    }
+        .form-label i {
+            color: var(--accent-cyan);
+        }
 
-    .unicorn-button:hover {
-      transform: scale(1.05) rotate(2deg);
-      box-shadow: 
-        0 0 25px #ff69b4,
-        0 0 50px #ffd700,
-        0 0 75px #ff69b4;
-    }
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(13, 17, 33, 0.8);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
 
-    /* 🌸 UNICORN BOX */
-    .unicorn-box {
-      position: relative;
-      background: rgba(26, 11, 46, 0.85);
-      backdrop-filter: blur(25px);
-      overflow: hidden;
-    }
+        .input-field::placeholder {
+            color: var(--text-muted);
+        }
 
-    .unicorn-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.5rem;
-      padding: 3px;
-      background: linear-gradient(45deg, #ffd700, #ff69b4, #98fb98, #dda0dd);
-      background-size: 400% 400%;
-      animation: unicornPulse 6s ease-in-out infinite;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      z-index: -1;
-    }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            background: rgba(13, 17, 33, 0.95);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
 
-    .unicorn-gallop { animation: unicornGallop 0.6s; }
+        .btn {
+            width: 100%;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
 
-    /* 🌸 UNICORN INPUT */
-    .unicorn-input {
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,215,0,0.4);
-      backdrop-filter: blur(15px);
-      transition: all 0.3s ease;
-      position: relative;
-    }
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 8px 24px rgba(0, 217, 255, 0.2);
+        }
 
-    .unicorn-input:focus {
-      border-color: #ff69b4;
-      box-shadow: 0 0 25px rgba(255,105,180,0.5);
-      background: rgba(255,255,255,0.15);
-      transform: scale(1.02);
-    }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 217, 255, 0.3);
+        }
 
-    /* 🌸 UNICORN LOADING */
-    .unicorn-loader {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,215,0,0.3);
-      border-radius: 50%;
-      border-top-color: #ff69b4;
-      animation: unicornHornSpin 1s linear infinite;
-    }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    /* 🌸 UNICORN RUN ANIMATION */
-    .unicorn-run {
-      position: absolute;
-      width: 40px;
-      height: 30px;
-      background: #ff69b4;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      animation: unicornGallop 2s ease-in-out infinite;
-      z-index: 5;
-    }
+        .btn-secondary {
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+        }
 
-    .unicorn-run::before {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 12px solid #ffd700;
-    }
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 217, 255, 0.05);
+        }
 
-    .unicorn-run::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 10px;
-      width: 6px;
-      height: 12px;
-      background: #ffd700;
-      border-radius: 3px;
-      animation: unicornGallop 2s ease-in-out infinite reverse;
-    }
-  </style>
+        .code-display {
+            background: rgba(13, 17, 33, 0.8);
+            border: 1.5px dashed rgba(0, 217, 255, 0.3);
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 24px;
+            display: none;
+            animation: slideUp 0.4s ease;
+        }
+
+        .code-display.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .code-value {
+            font-family: 'Courier New', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+
+        .code-timer {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.3s ease;
+            border-left: 4px solid;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: #6ee7b7;
+        }
+
+        .info-box {
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            margin-bottom: 14px;
+        }
+
+        .info-box ol {
+            color: var(--text-secondary);
+            padding-left: 22px;
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-top: 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-cyan);
+            gap: 12px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .logo-box {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .code-value {
+                font-size: 1.8rem;
+                letter-spacing: 6px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
 
-<body class="min-h-screen flex items-center justify-center bg-black overflow-hidden relative">
-  <!-- 🌸 UNICORN VIDEO BACKGROUND - NO RAIN -->
-  <video id="bg-video" autoplay muted loop playsinline>
-    <source src="https://files.catbox.moe/9fww2j.mp4" type="video/mp4">
-  </video>
-
-  <!-- 🌸 UNICORN STARFIELD -->
-  <div id="unicorn-stars" class="fixed inset-0 pointer-events-none z-0"></div>
-
-  <!-- 🌸 UNICORN SPARKLES -->
-  <div id="sparkles-container" class="fixed inset-0 pointer-events-none z-0"></div>
-
-  <!-- 🌸 UNICORN RUNNING ANIMATIONS -->
-  <div id="unicorn-runner" class="fixed bottom-10 left-0 pointer-events-none z-5"></div>
-
-  <!-- 🌸 MAIN UNICORN BOX -->
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="max-w-md mx-auto p-8 unicorn-box rounded-3xl unicorn-border relative overflow-hidden">
-      <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-500 rounded-3xl opacity-30 blur-xl animate-pulse"></div>
-
-      <div class="relative z-10 text-center">
-        <!-- 🌸 UNICORN ICON -->
-        <div class="flex justify-center mb-6 relative">
-          <i class="fas fa-magic text-7xl unicorn-gradient animate-pulse"></i>
-          <div class="unicorn-sparkle absolute -top-2 -right-2"></div>
-          <div class="unicorn-sparkle absolute -bottom-2 -left-2"></div>
-        </div>
-
-        <!-- 🌸 UNICORN TITLES -->
-        <h3 class="text-3xl font-black mb-3 unicorn-gradient unicorn-neon tracking-widest">
-          𝗠𝗜𝗡𝗜 𝗕𝗢𝗧
-        </h3>
-        <h4 class="text-2xl font-extrabold uppercase tracking-widest mb-6 unicorn-gradient">
-          ☭𝙻𝙾𝙵𝚃-𝚀𝚄𝙰𝙽𝚃𝚄𝙼-𝚅𝙸𝙸𝙸☭
-        </h4>
-
-        <!-- 🌸 UNICORN DIVIDER -->
-        <div class="flex items-center justify-center mb-8">
-          <div class="flex-grow border-t border-yellow-500 border-opacity-30"></div>
-          <span class="mx-3 text-yellow-300 text-xs tracking-widest font-bold">⟐ 𝚙𝚘𝚠𝚎𝚛𝚎𝚍 𝚋𝚢 𝚂𝚒𝚛 𝙻𝙾𝙵𝚃 ⟐</span>
-          <div class="flex-grow border-t border-pink-500 border-opacity-30"></div>
-        </div>
-
-        <!-- 📱 UNICORN INPUT & BUTTON -->
-        <div class="space-y-4">
-          <input
-            id="number"
-            type="number"
-            placeholder="+255xxxxxxxxx"
-            class="unicorn-input w-full px-5 py-4 rounded-xl text-white placeholder-yellow-300 placeholder-opacity-60 focus:outline-none focus:ring-0 text-lg font-mono"
-          />
-          <button
-            id="submit"
-            class="unicorn-button w-full px-6 py-4 bg-gradient-to-r from-yellow-500 via-pink-500 to-purple-600 rounded-xl text-white font-black uppercase tracking-widest text-lg"
-          >
-            ⟐ code ⟐
-          </button>
-        </div>
-
-        <!-- 💬 UNICORN STATUS -->
-        <div id="waiting-message" class="text-center unicorn-gradient text-xl hidden mt-6 flex items-center justify-center space-x-2">
-          <span class="unicorn-loader"></span>
-          <span>𝚂𝚙𝚛𝚎𝚊𝚍𝚒𝚗𝚐 𝙼𝚊𝚐𝚒𝚌𝚊𝚕 𝙳𝚞𝚜𝚝...</span>
-        </div>
-        <main id="pair" class="text-center mt-6"></main>
-      </div>
-    </div>
-  </div>
-
-  <!-- ⚙️ UNICORN SCRIPTS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
-  <script>
-    // 🌟 UNICORN STARFIELD
-    function createUnicornStars() {
-      const container = document.getElementById('unicorn-stars');
-      const starCount = 80;
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.classList.add('unicorn-star');
-        const size = Math.random() * 3 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.animationDelay = `${Math.random() * 6}s`;
-        star.style.animationDuration = `${Math.random() * 4 + 2}s`;
-        container.appendChild(star);
-      }
-    }
-
-    // ✨ UNICORN SPARKLES
-    function createSparkles() {
-      const container = document.getElementById('sparkles-container');
-      for (let i = 0; i < 20; i++) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'unicorn-sparkle';
-        sparkle.style.left = `${Math.random() * 100}%`;
-        sparkle.style.top = `${Math.random() * 100}%`;
-        sparkle.style.animationDuration = `${Math.random() * 3 + 1}s`;
-        sparkle.style.animationDelay = `${Math.random() * 2}s`;
-        container.appendChild(sparkle);
-      }
-    }
-
-    // 🦄 UNICORN RUNNER
-    function createUnicornRunner() {
-      const container = document.getElementById('unicorn-runner');
-      for (let i = 0; i < 3; i++) {
-        const unicorn = document.createElement('div');
-        unicorn.className = 'unicorn-run';
-        unicorn.style.left = `${i * 33}%`;
-        unicorn.style.animationDelay = `${i * 0.5}s`;
-        container.appendChild(unicorn);
-      }
-    }
-
-    // 🧬 ELEMENTS
-    const pairOutput = document.getElementById("pair");
-    const submitBtn = document.getElementById("submit");
-    const inputNum = document.getElementById("number");
-    const box = document.querySelector(".unicorn-box");
-    const waitingMessage = document.getElementById("waiting-message");
-
-    // 📋 UNICORN COPY FUNCTION
-    async function Copy() {
-      const obj = document.getElementById("copy");
-      const originalText = obj.innerText;
-      const code = originalText.replace('CODE: ', '');
-
-      await navigator.clipboard.writeText(code);
-      obj.innerHTML = `<i class="fas fa-check-circle mr-2"></i> 𝙲𝙾𝙿𝙸𝙴𝙳 ⟐`;
-      obj.classList.add('bg-green-600', 'bg-opacity-30', 'border-green-500');
-      obj.classList.remove('bg-opacity-10', 'border-opacity-20');
-
-      setTimeout(() => {
-        obj.innerHTML = originalText;
-        obj.classList.remove('bg-green-600', 'bg-opacity-30', 'border-green-500');
-        obj.classList.add('bg-opacity-10', 'border-opacity-20');
-      }, 2000);
-    }
-
-    // 🚀 UNICORN SUBMIT
-    submitBtn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      box.classList.add('unicorn-gallop');
-      setTimeout(() => box.classList.remove('unicorn-gallop'), 600);
-
-      const numVal = inputNum.value;
-      if (!numVal) {
-        pairOutput.innerHTML = `<div class="text-red-400 font-black mt-6 animate-pulse">⚠️ 𝙸𝙽𝙿𝚄𝚃 𝚈𝙾𝚄𝚁 𝙼𝙰𝙶𝙸𝙲𝙰𝙻 𝙸𝙳</div>`;
-        return;
-      }
-      if (numVal.replace(/[^0-9]/g, "").length < 11) {
-        pairOutput.innerHTML = `<div class="text-red-400 font-black mt-6 animate-pulse">❌ 𝙸𝙽𝚅𝙰𝙻𝙸𝙳 𝙸𝙳</div>`;
-        return;
-      }
-
-      const cleanNum = numVal.replace(/[^0-9]/g, "");
-      inputNum.type = "text";
-      inputNum.value = "+" + cleanNum;
-      inputNum.classList.add('text-white', 'text-xl', 'font-mono');
-      waitingMessage.classList.remove('hidden');
-      pairOutput.innerHTML = '';
-
-      try {
-        const { data } = await axios(`/code?number=${cleanNum}`);
-        const code = data.code || `U${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
-        waitingMessage.classList.add('hidden');
-
-        pairOutput.innerHTML = `
-          <div class="mt-8">
-            <div class="text-6xl unicorn-gradient mb-4">⟐</div>
-            <div class="text-yellow-300 text-lg font-bold mb-4">𝙼𝙰𝙶𝙸𝙲𝙰𝙻 𝙴𝙽𝚃𝙰𝙽𝙶𝙻𝙴𝙼𝙴𝙽𝚃 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴</div>
-            <div id="copy" onclick="Copy()" class="inline-block px-8 py-4 bg-black bg-opacity-10 rounded-xl border border-white border-opacity-20 cursor-pointer hover:bg-opacity-25 transition-all duration-300 unicorn-border">
-              <span class="font-black text-white text-lg">𝙲𝙾𝙳𝙴: </span>
-              <span class="font-black unicorn-gradient text-2xl">${code}</span>
+    <div class="container">
+        <div class="card">
+            <div class="logo-box">
+                <i class="fab fa-whatsapp"></i>
             </div>
-            <div class="text-yellow-300 text-sm mt-3 font-mono">⟐ 𝙲𝙻𝙸𝙲𝙺 𝚃𝙾 𝙲𝙾𝙿𝚈 𝙲𝙾𝙳𝙴 ⟐</div>
-          </div>
-        `;
-      } catch {
-        waitingMessage.classList.add('hidden');
-        pairOutput.innerHTML = `<div class="text-red-400 font-black mt-6 animate-pulse">❌ 𝙻𝙾𝚂𝚃. 𝚁𝙴𝚃𝚁𝚈 ⟐</div>`;
-      }
-    });
 
-    // 🌟 INITIALIZE UNICORN EFFECTS
-    createUnicornStars();
-    createSparkles();
-    createUnicornRunner();
+            <h1>KAMRAN-MINI-BOT</h1>
+            <p class="subtitle">Connect your WhatsApp bot in seconds</p>
 
-    // 🎵 UNICORN INPUT FOCUS EFFECT
-    inputNum.addEventListener('focus', () => {
-      inputNum.parentElement.style.transform = 'scale(1.02)';
-    });
-    inputNum.addEventListener('blur', () => {
-      inputNum.parentElement.style.transform = 'scale(1)';
-    });
-  </script>
+            <form id="pairForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-phone"></i>
+                        Phone Number
+                    </label>
+                    <input 
+                        type="text" 
+                        class="input-field" 
+                        id="phoneNumber" 
+                        placeholder="923219300532" 
+                        maxlength="15"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i class="fas fa-link"></i>
+                    Generate Pairing Code
+                </button>
+            </form>
+
+            <div class="code-display" id="codeDisplay">
+                <div class="code-label">Your Pairing Code</div>
+                <div class="code-value" id="pairingCode">--------</div>
+                <div class="code-timer" id="codeTimer">Expires in 60 seconds</div>
+                <button type="button" class="btn btn-secondary" onclick="copyCode()">
+                    <i class="fas fa-copy"></i> Copy Code
+                </button>
+            </div>
+
+            <div class="alert alert-error" id="errorAlert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMessage"></span>
+            </div>
+
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle"></i>
+                <span id="successMessage"></span>
+            </div>
+
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle"></i> How to Connect</h3>
+                <ol>
+                    <li>Open <strong>WhatsApp</strong> on your phone</li>
+                    <li>Go to <strong>Settings → Linked Devices</strong></li>
+                    <li>Tap <strong>Link a Device</strong></li>
+                    <li>Choose <strong>Link with phone number instead</strong></li>
+                    <li>Enter the 8-digit code above</li>
+                    <li>Wait for successful connection</li>
+                </ol>
+            </div>
+
+            <a href="/" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('pairForm');
+        const phoneInput = document.getElementById('phoneNumber');
+        const submitBtn = document.getElementById('submitBtn');
+        const codeDisplay = document.getElementById('codeDisplay');
+        const pairingCode = document.getElementById('pairingCode');
+        const codeTimer = document.getElementById('codeTimer');
+        const errorAlert = document.getElementById('errorAlert');
+        const errorMessage = document.getElementById('errorMessage');
+        const successAlert = document.getElementById('successAlert');
+        const successMessage = document.getElementById('successMessage');
+
+        let timerInterval = null;
+
+        function hideAlerts() {
+            errorAlert.classList.remove('show');
+            successAlert.classList.remove('show');
+        }
+
+        function showError(msg) {
+            hideAlerts();
+            errorMessage.textContent = msg;
+            errorAlert.classList.add('show');
+            setTimeout(() => hideAlerts(), 5000);
+        }
+
+        function showSuccess(msg) {
+            hideAlerts();
+            successMessage.textContent = msg;
+            successAlert.classList.add('show');
+            setTimeout(() => hideAlerts(), 4000);
+        }
+
+        function startTimer(seconds) {
+            if (timerInterval) clearInterval(timerInterval);
+
+            let remaining = seconds;
+            codeTimer.textContent = `Expires in ${remaining} seconds`;
+
+            timerInterval = setInterval(() => {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    codeTimer.textContent = 'Code expired - Generate a new one';
+                    codeDisplay.classList.remove('show');
+                    showError('Pairing code expired. Please generate a new one.');
+                } else {
+                    codeTimer.textContent = `Expires in ${remaining} seconds`;
+                }
+            }, 1000);
+        }
+
+        function copyCode() {
+            const code = pairingCode.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showSuccess('✓ Pairing code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                showError('Failed to copy. Please try again.');
+            });
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            hideAlerts();
+
+            const phone = phoneInput.value.trim().replace(/[^0-9]/g, '');
+
+            if (!phone || phone.length < 10) {
+                showError('Please enter a valid phone number with country code');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Generating...';
+
+            try {
+                const response = await fetch(`/code?number=${encodeURIComponent(phone)}`);
+                const data = await response.json();
+
+                if (data.code) {
+                    pairingCode.textContent = data.code;
+                    codeDisplay.classList.add('show');
+                    startTimer(60);
+                    showSuccess('✓ Pairing code generated! Enter it in WhatsApp to connect.');
+                } else if (data.error) {
+                    showError(data.error);
+                } else {
+                    showError('Failed to generate pairing code. Please try again.');
+                }
+            } catch (err) {
+                showError('Connection error. Please check if server is running.');
+                console.error('Error:', err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-link"></i> Generate Pairing Code';
+            }
+        }
+
+        phoneInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+    </script>
 </body>
-</html>
+      </html>
+  
